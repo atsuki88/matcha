@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,6 +21,51 @@ export const Contact2 = ({
     email = "matcha.ai789@gmail.com",
     web = { label: "shadcnblocks.com", url: "https://shadcnblocks.com" },
 }: Contact2Props) => {
+    const [state, setState] = useState<{ submitting: boolean; succeeded: boolean; errors: any }>({
+        submitting: false,
+        succeeded: false,
+        errors: null,
+    });
+
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+
+        try {
+            setState(prev => ({ ...prev, submitting: true }));
+            const response = await fetch("https://formspree.io/f/xaqddonn", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                setState({ submitting: false, succeeded: true, errors: null });
+            } else {
+                const data = await response.json();
+                setState({ submitting: false, succeeded: false, errors: data.errors });
+            }
+        } catch (error) {
+            setState({ submitting: false, succeeded: false, errors: error });
+        }
+    };
+
+    if (state.succeeded) {
+        return (
+            <section className="py-32 bg-background">
+                <div className="container px-4 md:px-6 text-center">
+                    <div className="max-w-md mx-auto p-10 rounded-lg border border-border bg-card shadow-sm">
+                        <h2 className="text-3xl font-bold mb-4 text-foreground">お問い合わせありがとうございます！</h2>
+                        <p className="text-muted-foreground mb-8">メッセージを受け付けました。確認後、ご連絡いたします。</p>
+                        <Button onClick={() => window.location.reload()}>戻る</Button>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
     return (
         <section className="py-32 bg-background">
             <div className="container px-4 md:px-6">
@@ -59,29 +104,33 @@ export const Contact2 = ({
                         </div>
                     </div>
                     <div className="mx-auto flex max-w-screen-md flex-col gap-6 rounded-lg border border-border bg-card p-10 shadow-sm w-full">
-                        <div className="flex flex-col md:flex-row gap-4">
-                            <div className="grid w-full items-center gap-1.5">
-                                <Label htmlFor="firstname">First Name</Label>
-                                <Input type="text" id="firstname" placeholder="First Name" />
+                        <form onSubmit={onSubmit} className="flex flex-col gap-6">
+                            <div className="flex flex-col md:flex-row gap-4">
+                                <div className="grid w-full items-center gap-1.5">
+                                    <Label htmlFor="firstname">First Name</Label>
+                                    <Input type="text" name="firstname" id="firstname" placeholder="First Name" required />
+                                </div>
+                                <div className="grid w-full items-center gap-1.5">
+                                    <Label htmlFor="lastname">Last Name</Label>
+                                    <Input type="text" name="lastname" id="lastname" placeholder="Last Name" required />
+                                </div>
                             </div>
                             <div className="grid w-full items-center gap-1.5">
-                                <Label htmlFor="lastname">Last Name</Label>
-                                <Input type="text" id="lastname" placeholder="Last Name" />
+                                <Label htmlFor="email">Email</Label>
+                                <Input type="email" name="email" id="email" placeholder="Email" required />
                             </div>
-                        </div>
-                        <div className="grid w-full items-center gap-1.5">
-                            <Label htmlFor="email">Email</Label>
-                            <Input type="email" id="email" placeholder="Email" />
-                        </div>
-                        <div className="grid w-full items-center gap-1.5">
-                            <Label htmlFor="subject">Subject</Label>
-                            <Input type="text" id="subject" placeholder="Subject" />
-                        </div>
-                        <div className="grid w-full gap-1.5">
-                            <Label htmlFor="message">Message</Label>
-                            <Textarea placeholder="Type your message here." id="message" />
-                        </div>
-                        <Button className="w-full">Send Message</Button>
+                            <div className="grid w-full items-center gap-1.5">
+                                <Label htmlFor="subject">Subject</Label>
+                                <Input type="text" name="subject" id="subject" placeholder="Subject" required />
+                            </div>
+                            <div className="grid w-full gap-1.5">
+                                <Label htmlFor="message">Message</Label>
+                                <Textarea placeholder="Type your message here." name="message" id="message" required />
+                            </div>
+                            <Button className="w-full" type="submit" disabled={state.submitting}>
+                                {state.submitting ? "Sending..." : "Send Message"}
+                            </Button>
+                        </form>
                     </div>
                 </div>
             </div>

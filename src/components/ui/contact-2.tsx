@@ -27,6 +27,8 @@ export const Contact2 = ({
         errors: null,
     });
 
+    console.log("Contact form loaded v1.1");
+
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);

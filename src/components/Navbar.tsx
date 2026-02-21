@@ -14,10 +14,12 @@ const Navbar = () => {
 
     const navItems = [
         { label: "Home", href: "#home" },
+        { label: "AI Course", href: "#ai-course" },
         { label: "Services", href: "#services" },
         { label: "Testimonials", href: "#testimonials" },
         { label: "Contact", href: "#contact" },
     ];
+
 
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">

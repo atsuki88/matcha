@@ -5,6 +5,7 @@ import SplineScene from "@/components/SplineScene";
 import { Contact2 } from "@/components/ui/contact-2";
 import { TestimonialStack, Testimonial } from "@/components/ui/glass-testimonial-swiper";
 import { Users, Calendar, ThumbsUp, ShieldCheck, Clock, Share, Rocket, Zap, Gem } from 'lucide-react';
+import Spline from "@splinetool/react-spline";
 
 const testimonialsData: Testimonial[] = [
   {
@@ -75,7 +76,19 @@ export default function Home() {
         </div>
       </section>
 
+      {/* AI Course Section */}
+      <section id="ai-course" className="w-full h-screen relative bg-background">
+        <div className="absolute top-1/4 left-10 z-10 p-6 max-w-lg">
+          <h2 className="text-4xl font-bold text-foreground mb-4">AIコース</h2>
+          <p className="text-lg text-muted-foreground">AIの基礎から実践まで、わかりやすく学べるコースです。</p>
+        </div>
+        <div className="w-full h-full">
+          <Spline scene="https://prod.spline.design/vA-vXuhp-4fg5pPl/scene.splinecode" />
+        </div>
+      </section>
+
       {/* Services Section */}
+
       <section id="services" className="w-full min-h-screen flex items-center justify-center bg-muted/20 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-center mb-16 text-foreground">Services</h2>

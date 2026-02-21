@@ -76,16 +76,63 @@ export default function Home() {
         </div>
       </section>
 
+
       {/* AI Course Section */}
       <section id="ai-course" className="w-full h-screen relative bg-background">
+        {/* Text Overlay - Top Left */}
         <div className="absolute top-1/4 left-10 z-10 p-6 max-w-lg">
           <h2 className="text-4xl font-bold text-foreground mb-4">AIコース</h2>
           <p className="text-lg text-muted-foreground">AIの基礎から実践まで、わかりやすく学べるコースです。</p>
         </div>
+
+        {/* My AI Course Button Overlay - Top Right, above Spline buttons */}
+        <div className="absolute top-24 right-10 z-20 flex flex-col items-end gap-3">
+          <a
+            href="https://www.skool.com/ai-labo-8597/about"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'block',
+              padding: '14px 28px',
+              background: 'linear-gradient(135deg, rgba(100, 220, 255, 0.15), rgba(100, 180, 255, 0.05))',
+              border: '1px solid rgba(100, 200, 255, 0.6)',
+              borderRadius: '4px',
+              color: '#88ddff',
+              fontFamily: 'monospace',
+              fontSize: '14px',
+              fontWeight: 'bold',
+              letterSpacing: '2px',
+              textDecoration: 'none',
+              textAlign: 'center',
+              minWidth: '200px',
+              backdropFilter: 'blur(8px)',
+              boxShadow: '0 0 20px rgba(100, 200, 255, 0.2), inset 0 0 20px rgba(100, 200, 255, 0.05)',
+              transition: 'all 0.3s ease',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={e => {
+              const el = e.currentTarget as HTMLAnchorElement;
+              el.style.background = 'linear-gradient(135deg, rgba(100, 220, 255, 0.3), rgba(100, 180, 255, 0.15))';
+              el.style.boxShadow = '0 0 40px rgba(100, 200, 255, 0.5), inset 0 0 20px rgba(100, 200, 255, 0.1)';
+              el.style.transform = 'translateX(-4px)';
+            }}
+            onMouseLeave={e => {
+              const el = e.currentTarget as HTMLAnchorElement;
+              el.style.background = 'linear-gradient(135deg, rgba(100, 220, 255, 0.15), rgba(100, 180, 255, 0.05))';
+              el.style.boxShadow = '0 0 20px rgba(100, 200, 255, 0.2), inset 0 0 20px rgba(100, 200, 255, 0.05)';
+              el.style.transform = 'translateX(0)';
+            }}
+          >
+            ✦ 私のAIコース
+          </a>
+        </div>
+
+        {/* Spline 3D Scene */}
         <div className="w-full h-full">
           <Spline scene="https://prod.spline.design/vA-vXuhp-4fg5pPl/scene.splinecode" />
         </div>
       </section>
+
 
       {/* Services Section */}
 
